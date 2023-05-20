@@ -1,4 +1,10 @@
-import { Platform, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  useColorScheme,
+} from "react-native";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
@@ -7,6 +13,7 @@ import { base64_to_url } from "../utils/upload_image";
 
 export default function ModalScreen() {
   const route = useRoute();
+  const colorScheme = useColorScheme();
   const { prediction, url } = route.params as any;
 
   return (
@@ -15,7 +22,14 @@ export default function ModalScreen() {
         source={{ uri: url }}
         style={{ width: 300, height: 300, borderRadius: 10 }}
       />
-      <Text style={styles.title}>{prediction}</Text>
+      <Text
+        style={[
+          styles.title,
+          { color: colorScheme === "light" ? "#000" : "#fff" },
+        ]}
+      >
+        {prediction}
+      </Text>
     </View>
   );
 }
@@ -31,7 +45,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     marginTop: 20,
-    color: "#000",
   },
   separator: {
     marginVertical: 30,

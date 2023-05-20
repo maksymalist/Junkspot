@@ -53,20 +53,25 @@ export default function CameraComponent() {
   };
 
   const __predictionAPI = async () => {
+    setIsPredicting(true);
+
     try {
-      setIsPredicting(true);
       // upload image to firebase
       if (!capturedImage) return;
       const item = await load_image_base64_encoding(capturedImage.uri);
+      console.log("item", item);
       const image_url = await base64_to_url(item.base64String, item.fileType);
+      console.log("image_url", image_url);
       if (!image_url) return;
 
       const predction = await axios.post(
-        "http://143.110.214.128:5000/api/v1/predict",
+        "http://147.182.152.133:5000/api/v1/predict",
         {
           image: image_url.url,
         }
       );
+
+      console.log("predction", predction);
 
       if (!predction.data) return;
 
@@ -77,7 +82,7 @@ export default function CameraComponent() {
         image_url.temp_id
       );
 
-      // TODO : upload the image to firebase then replace the mock image url
+      console.log("real_url", real_url);
       setIsPredicting(false);
 
       //@ts-ignore
@@ -86,7 +91,7 @@ export default function CameraComponent() {
         url: real_url,
       });
     } catch (error) {
-      alert(error);
+      console.log("error", error);
     }
   };
 
