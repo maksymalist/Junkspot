@@ -11,8 +11,8 @@ import { Text, View } from "../../components/Themed";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { OfflineImage } from "../../types/offline_image";
-
-import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "expo-router";
+import { auth } from "../../firebase";
 
 const ItemSeparatorView = () => {
   return (
@@ -46,6 +46,22 @@ export default function TabTwoScreen() {
     getOfflineImages();
   }, []);
 
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user: any) => {
+      if (!user) {
+        //@ts-ignore
+        navigation?.navigate("(auth)");
+      } else {
+        //@ts-ignore
+        navigation?.navigate("(tabs)");
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
   return (
     <View style={styles.container}>
       {offlineImages.length <= 0 && (
@@ -77,7 +93,7 @@ export default function TabTwoScreen() {
           />
         }
       />
-      <TouchableOpacity style={styles.buttonPrimary} onPress={clearStorage}>
+      <TouchableOpacity style={styles.buttonSecondary} onPress={clearStorage}>
         <Text style={styles.textBold}> clear storage </Text>
       </TouchableOpacity>
     </View>
@@ -127,7 +143,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 10,
   },
-  buttonPrimary: {
+  buttonSecondary: {
     backgroundColor: "#FF4365",
     width: "100%",
     maxWidth: 350,

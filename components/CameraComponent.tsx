@@ -5,14 +5,10 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { load_image_base64_encoding, save_to_local } from "../utils/save_local";
 import CameraPreview from "./CameraPreview";
+import { useNavigation } from "expo-router";
+import { base64_to_url, upload_image_class } from "../utils/upload_image";
 
-import * as Network from "expo-network";
-
-type Props = {
-  setPrediction: React.Dispatch<React.SetStateAction<string>>;
-};
-
-export default function CameraComponent(props: Props) {
+export default function CameraComponent() {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [isPredicting, setIsPredicting] = useState<boolean>(false);
@@ -21,7 +17,8 @@ export default function CameraComponent(props: Props) {
   const [capturedImage, setCapturedImage] =
     useState<CameraCapturedPicture | null>(null);
   let cam: Camera | null;
-  const setPrediction = props.setPrediction;
+
+  const navigation = useNavigation();
 
   function toggleCameraType() {
     setType((current) =>
@@ -44,6 +41,7 @@ export default function CameraComponent(props: Props) {
   const __savePhoto = async () => {
     if (!capturedImage) return;
 
+    console.log("capturedImage", capturedImage);
     const image = await load_image_base64_encoding(capturedImage.uri);
     await save_to_local(image.base64String, image.fileType);
     setCapturedImage(null);
@@ -55,20 +53,41 @@ export default function CameraComponent(props: Props) {
   };
 
   const __predictionAPI = async () => {
-    setIsPredicting(true);
-    // predict the image and upload to firebase
-    const predction = await axios.post(
-      "http://143.110.214.128:5000/api/v1/predict",
-      {
-        image:
-          "https://junk-judge-models.s3.us-west-2.amazonaws.com/IMG_2439.jpg",
-      }
-    );
-    // TODO : upload the image to firebase then replace the mock image url
+    try {
+      setIsPredicting(true);
+      // upload image to firebase
+      if (!capturedImage) return;
+      const item = await load_image_base64_encoding(capturedImage.uri);
+      const image_url = await base64_to_url(item.base64String, item.fileType);
+      if (!image_url) return;
 
-    console.log("predction", predction.data);
-    setPrediction(predction.data);
-    setIsPredicting(false);
+      const predction = await axios.post(
+        "http://143.110.214.128:5000/api/v1/predict",
+        {
+          image: image_url.url,
+        }
+      );
+
+      if (!predction.data) return;
+
+      const real_url = await upload_image_class(
+        item.base64String,
+        item.fileType,
+        predction.data,
+        image_url.temp_id
+      );
+
+      // TODO : upload the image to firebase then replace the mock image url
+      setIsPredicting(false);
+
+      //@ts-ignore
+      navigation.navigate("prediction_modal", {
+        prediction: predction.data,
+        url: real_url,
+      });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (

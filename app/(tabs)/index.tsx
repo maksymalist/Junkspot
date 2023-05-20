@@ -2,17 +2,30 @@ import { StyleSheet } from "react-native";
 
 import { Text, View } from "../../components/Themed";
 import CameraComponent from "../../components/CameraComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigation } from "expo-router";
+import { auth } from "../../firebase";
 
 export default function TabOneScreen() {
-  const [prediction, setPrediction] = useState<string>("unknown 🥷");
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user: any) => {
+      if (!user) {
+        //@ts-ignore
+        navigation?.navigate("(auth)");
+      } else {
+        //@ts-ignore
+        navigation?.navigate("(tabs)");
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.title}>junk type: {prediction}</Text>
-      </View>
-      <CameraComponent setPrediction={setPrediction} />
+      <CameraComponent />
     </View>
   );
 }

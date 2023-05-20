@@ -3,10 +3,13 @@ import { Link, Tabs, useNavigation } from "expo-router";
 import { Pressable, useColorScheme } from "react-native";
 
 import Colors from "../../constants/Colors";
-import { AntDesign } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+import {
+  AntDesign,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
-export default function TabLayout() {
+export default function AuthLayout() {
   const colorScheme = useColorScheme();
 
   return (
@@ -16,29 +19,24 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="login"
         options={{
-          title: "Camera",
+          title: "Login",
           tabBarIcon: ({ color }) => (
-            <AntDesign name="camerao" size={24} color={color} />
+            <MaterialCommunityIcons
+              name="login-variant"
+              size={24}
+              color={color}
+            />
           ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="signup"
         options={{
-          title: "Images",
+          title: "Signup",
           tabBarIcon: ({ color }) => (
-            <Entypo name="images" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="user-circle" size={24} color={color} />
+            <FontAwesome5 name="address-card" size={24} color={color} />
           ),
         }}
       />
