@@ -65,7 +65,7 @@ export default function CameraComponent() {
       if (!image_url) return;
 
       const predction = await axios.post(
-        "http://147.182.152.133:5000/api/v1/predict",
+        "http://159.89.125.42:5000/api/v1/predict",
         {
           image: image_url.url,
         }
