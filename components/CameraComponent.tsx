@@ -56,40 +56,35 @@ export default function CameraComponent() {
     setIsPredicting(true);
 
     try {
-      // upload image to firebase
       if (!capturedImage) return;
       const item = await load_image_base64_encoding(capturedImage.uri);
-      console.log("item", item);
-      const image_url = await base64_to_url(item.base64String, item.fileType);
-      console.log("image_url", image_url);
-      if (!image_url) return;
+      console.log("item", item.base64String);
 
       const predction = await axios.post(
         "http://159.89.125.42:5000/api/v1/predict",
         {
-          image: image_url.url,
+          image_b64: item.base64String,
         }
       );
 
       console.log("predction", predction);
 
       if (!predction.data) return;
-
-      const real_url = await upload_image_class(
-        item.base64String,
-        item.fileType,
-        predction.data,
-        image_url.temp_id
-      );
-
-      console.log("real_url", real_url);
       setIsPredicting(false);
-
       //@ts-ignore
       navigation.navigate("prediction_modal", {
         prediction: predction.data,
-        url: real_url,
+        img_base64: item.base64String,
+        file_type: item.fileType,
       });
+
+      // upload image to firebase data pipeline
+      const img_url = await upload_image_class(
+        item.base64String,
+        item.fileType,
+        predction.data
+      );
+      console.log("img_url", img_url);
     } catch (error) {
       console.log("error", error);
     }

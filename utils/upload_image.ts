@@ -38,8 +38,7 @@ export const base64_to_url = async (
 export const upload_image_class = async (
   base64: string,
   file_type: string,
-  prediction: Prediction,
-  temp_id: string
+  prediction: Prediction
 ): Promise<string> => {
   // upload image to class folder
   const storage_ref = storage.ref(`${prediction}/`);
@@ -55,11 +54,6 @@ export const upload_image_class = async (
 
   const snapshot = await storage_ref.child(id).put(blob, metadata);
   const url = await snapshot.ref.getDownloadURL();
-
-  // delete image from temp folder
-
-  const temp_ref = storage.ref(`temp/${temp_id}`);
-  await temp_ref.delete();
 
   return url;
 };

@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  useColorScheme,
 } from "react-native";
 import { auth } from "../../firebase";
 
@@ -16,6 +17,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
 
   const navigation = useNavigation();
+  const colorScheme = useColorScheme();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: any) => {
@@ -60,19 +62,21 @@ const LoginScreen = () => {
           placeholder="Nickname"
           value={displayName}
           onChangeText={(text) => setDisplayName(text)}
-          style={styles.input}
+          style={colorScheme === "dark" ? styles.input_dark : styles.input}
+          secureTextEntry
         />
         <TextInput
           placeholder="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
-          style={styles.input}
+          style={colorScheme === "dark" ? styles.input_dark : styles.input}
+          secureTextEntry
         />
         <TextInput
           placeholder="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
-          style={styles.input}
+          style={colorScheme === "dark" ? styles.input_dark : styles.input}
           secureTextEntry
         />
       </View>
@@ -103,6 +107,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+  },
+  input_dark: {
+    backgroundColor: "#333",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    color: "white",
   },
   buttonContainer: {
     width: "80%",

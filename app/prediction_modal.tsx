@@ -9,18 +9,20 @@ import {
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 import { useRoute } from "@react-navigation/native";
-import { base64_to_url } from "../utils/upload_image";
+import PredictionImage from "../components/PredictionImage";
 
 export default function ModalScreen() {
   const route = useRoute();
   const colorScheme = useColorScheme();
-  const { prediction, url } = route.params as any;
+  const { prediction, img_base64, file_type } = route.params as any;
 
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: url }}
-        style={{ width: 300, height: 300, borderRadius: 10 }}
+      <PredictionImage
+        base64={img_base64}
+        file_type={file_type}
+        width={300}
+        height={300}
       />
       <Text
         style={[
