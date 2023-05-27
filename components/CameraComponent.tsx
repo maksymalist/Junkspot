@@ -12,6 +12,7 @@ export default function CameraComponent() {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [isPredicting, setIsPredicting] = useState<boolean>(false);
+  const [predictionStep, setPredictionStep] = useState<number>(0);
 
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] =
@@ -59,6 +60,7 @@ export default function CameraComponent() {
       if (!capturedImage) return;
       const item = await load_image_base64_encoding(capturedImage.uri);
       console.log("item", item.base64String);
+      setPredictionStep(1);
 
       const predction = await axios.post(
         "http://159.89.125.42:5000/api/v1/predict",
@@ -67,10 +69,14 @@ export default function CameraComponent() {
         }
       );
 
+      setPredictionStep(2);
+
       console.log("predction", predction);
 
       if (!predction.data) return;
+      setPredictionStep(3);
       setIsPredicting(false);
+      setPredictionStep(0);
       //@ts-ignore
       navigation.navigate("prediction_modal", {
         prediction: predction.data,
@@ -100,6 +106,7 @@ export default function CameraComponent() {
             retakePicture={__retakePicture}
             predictionAPI={__predictionAPI}
             isPredicting={isPredicting}
+            predictionStep={predictionStep}
           />
         </View>
       ) : (

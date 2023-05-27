@@ -18,9 +18,17 @@ const CameraPreview = ({
   savePhoto,
   predictionAPI,
   isPredicting,
+  predictionStep,
 }: any) => {
   const colorScheme = useColorScheme();
   const [isConnected, setIsConnected] = useState(false);
+
+  const steps = [
+    "Converting image to base64...",
+    "Uploading to AI model...",
+    "Predicting...",
+    "Done! ✅",
+  ];
 
   useEffect(() => {
     checkConnection();
@@ -123,6 +131,18 @@ const CameraPreview = ({
           <MaterialIcons name="bubble-chart" size={24} color="white" />
         ) : null}
       </TouchableOpacity>
+      {isConnected && isPredicting ? (
+        <Text
+          style={{
+            color: colorScheme === "dark" ? "#fff" : "#000",
+            fontSize: 18,
+            marginTop: 40,
+            fontWeight: "bold",
+          }}
+        >
+          {steps[predictionStep]}
+        </Text>
+      ) : null}
     </View>
   );
 };
