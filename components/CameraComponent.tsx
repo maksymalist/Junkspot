@@ -104,7 +104,7 @@ export default function CameraComponent() {
 
       setPredictionStep(2);
 
-      console.log("prediction", prediction);
+      console.log("prediction", prediction.data);
 
       if (!prediction) return;
       setPredictionStep(3);
@@ -112,7 +112,7 @@ export default function CameraComponent() {
       setPredictionStep(0);
       //@ts-ignore
       navigation.navigate("prediction_modal", {
-        prediction: prediction,
+        prediction: prediction.data,
         img_base64: item.base64String,
         file_type: item.fileType,
       });
