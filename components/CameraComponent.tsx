@@ -1,13 +1,12 @@
 import { Camera, CameraCapturedPicture, CameraType } from "expo-camera";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import axios, { AxiosRequestConfig } from "axios";
 import { load_image_base64_encoding, save_to_local } from "../utils/save_local";
 import CameraPreview from "./CameraPreview";
 import { useNavigation } from "expo-router";
-import { base64_to_url, upload_image_class } from "../utils/upload_image";
-import { Prediction } from "types/prediction";
+import { upload_image_class } from "../utils/upload_image";
 
 export default function CameraComponent() {
   const [type, setType] = useState(CameraType.back);
@@ -54,36 +53,6 @@ export default function CameraComponent() {
     setPreviewVisible(false);
   };
 
-  const sendRequestToHuggingFaceAPI = async (
-    username: string,
-    modelId: string,
-    input: any
-  ): Promise<any> => {
-    const apiUrl = `https://maksymalist-junk-judge.hf.space/predict`;
-    const huggingfaceToken = "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";
-
-    const headers: AxiosRequestConfig["headers"] = {
-      Authorization: `Bearer ${huggingfaceToken}`,
-      "Content-Type": "application/json",
-    };
-
-    const requestData = {
-      inputs: input,
-    };
-
-    try {
-      const response = await axios.post(apiUrl, requestData, { headers });
-      if (response.status === 200) {
-        return response.data;
-      } else {
-        console.log(`Request failed with status code: ${response.status}`);
-        console.log(response.data);
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-  };
-
   const __predictionAPI = async () => {
     const huggingfaceToken = "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";
 
@@ -95,16 +64,25 @@ export default function CameraComponent() {
       console.log("item", item.base64String);
       setPredictionStep(1);
 
-      const prediction = await axios.post(
+      const response = await axios.post(
         "https://junkjudge-api-production.up.railway.app/api/v1/predict",
         {
           image_b64: item.base64String,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          timeout: 5000, // Timeout value in milliseconds (e.g., 5 seconds)
         }
       );
 
+      // Handle the response here
+      const prediction = response.data;
+
       setPredictionStep(2);
 
-      console.log("prediction", prediction.data);
+      console.log("prediction", prediction);
 
       if (!prediction) return;
       setPredictionStep(3);
@@ -112,7 +90,7 @@ export default function CameraComponent() {
       setPredictionStep(0);
       //@ts-ignore
       navigation.navigate("prediction_modal", {
-        prediction: prediction.data,
+        prediction: prediction,
         img_base64: item.base64String,
         file_type: item.fileType,
       });
@@ -121,11 +99,16 @@ export default function CameraComponent() {
       const img_url = await upload_image_class(
         item.base64String,
         item.fileType,
-        prediction.data
+        prediction
       );
       console.log("img_url", img_url);
     } catch (error) {
-      console.log("error", error);
+      if (axios.isCancel(error)) {
+        console.log("timed out");
+      } else {
+        // Handle other errors here
+        console.error(error);
+      }
     }
   };
 
