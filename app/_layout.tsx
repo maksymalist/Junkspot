@@ -9,8 +9,6 @@ import { SplashScreen, Stack, useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 
-import { auth } from "../firebase";
-
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -52,6 +50,10 @@ function RootLayoutNav() {
           <Stack.Screen
             name="prediction_modal"
             options={{ title: "Your results 📊", presentation: "modal" }}
+          />
+          <Stack.Screen
+            name="image_modal"
+            options={{ title: "Image 🏞️", presentation: "modal" }}
           />
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         </Stack>

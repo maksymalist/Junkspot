@@ -62,6 +62,11 @@ export default function TabTwoScreen() {
     return unsubscribe;
   }, []);
 
+  const helper = async () => {
+    //@ts-ignore
+    navigation.navigate("image_modal", {});
+  };
+
   return (
     <View style={styles.container}>
       {offlineImages.length <= 0 && (
@@ -82,10 +87,12 @@ export default function TabTwoScreen() {
         }}
         numColumns={3}
         horizontal={false}
-        data={offlineImages}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={ItemSeparatorView}
-        renderItem={Base64Image}
+        data={offlineImages}
+        renderItem={({ item }) => (
+          <Base64Image item={item} navigation={navigation} />
+        )}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -143,6 +150,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 10,
   },
+  snackback_left: {
+    width: "100%",
+    backgroundColor: "#fff",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    padding: 10,
+  },
   buttonSecondary: {
     backgroundColor: "#FF4365",
     width: "100%",
@@ -155,11 +170,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
+  buttonAction: {
+    backgroundColor: "#3095dc",
+    maxWidth: 350,
+    height: 50,
+    borderRadius: 5,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+    paddingRight: 20,
+    paddingLeft: 20,
+  },
   text: {
     padding: 0,
   },
   textBold: {
     fontWeight: "bold",
     color: "#fff",
+  },
+  textBoldBlue: {
+    fontWeight: "bold",
+    color: "#3095dc",
   },
 });
