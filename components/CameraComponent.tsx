@@ -54,18 +54,17 @@ export default function CameraComponent() {
   };
 
   const __predictionAPI = async () => {
-    const huggingfaceToken = "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";
-
     setIsPredicting(true);
 
     try {
       if (!capturedImage) return;
+      //@ts-ignore
       const item = await load_image_base64_encoding(capturedImage.uri);
       console.log("item", item.base64String);
       setPredictionStep(1);
 
       const response = await axios.post(
-        "https://junkjudge-api-production.up.railway.app/api/v1/predict",
+        "https://junk-judge-web.vercel.app/api/predict",
         {
           image_b64: item.base64String,
         },
@@ -78,7 +77,7 @@ export default function CameraComponent() {
       );
 
       // Handle the response here
-      const prediction = response.data;
+      const prediction = response.data.result[0];
 
       setPredictionStep(2);
 
@@ -102,12 +101,16 @@ export default function CameraComponent() {
         prediction
       );
       console.log("img_url", img_url);
-    } catch (error) {
+    } catch (error: any) {
       if (axios.isCancel(error)) {
-        console.log("timed out");
+        alert("Request canceled");
+        setIsPredicting(false);
+        setPredictionStep(0);
       } else {
         // Handle other errors here
-        console.error(error);
+        alert(error?.message || "Unknown Error");
+        setIsPredicting(false);
+        setPredictionStep(0);
       }
     }
   };

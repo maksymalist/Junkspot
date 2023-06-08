@@ -6,7 +6,6 @@ import {
   useColorScheme,
 } from "react-native";
 
-import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 import { useRoute } from "@react-navigation/native";
 import PredictionImage from "../components/PredictionImage";
