@@ -47,10 +47,17 @@ export default function ModalScreen() {
 
   const __predictionAPI = async () => {
     setIsPredicting(true);
+    console.log("predictionAPI");
 
     try {
       if (!image) return;
+      //@ts-ignore
       setPredictionStep(1);
+      console.log("image");
+
+      // get bytesize of image
+      const bytesize = 4 * (image.base64.length / 3);
+      console.log("bytesize", bytesize / 1000000, "MB");
 
       const response = await axios.post(
         "https://junk-judge-web.vercel.app/api/predict",

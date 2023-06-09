@@ -7,6 +7,7 @@ import { load_image_base64_encoding, save_to_local } from "../utils/save_local";
 import CameraPreview from "./CameraPreview";
 import { useNavigation } from "expo-router";
 import { upload_image_class } from "../utils/upload_image";
+import * as ImageManipulator from "expo-image-manipulator";
 
 export default function CameraComponent() {
   const [type, setType] = useState(CameraType.back);
@@ -34,11 +35,18 @@ export default function CameraComponent() {
     } else {
       const photo = await cam?.takePictureAsync();
       if (!photo) return;
-      setCapturedImage(photo);
+
+      // Resize the image
+
+      const resizedPhoto = await ImageManipulator.manipulateAsync(
+        photo.uri,
+        [{ resize: { width: 224 } }], // resize to width of 300 and preserve aspect ratio
+        { compress: 0.7 }
+      );
+      setCapturedImage(resizedPhoto);
       setPreviewVisible(true);
     }
   }
-
   const __savePhoto = async () => {
     if (!capturedImage) return;
 

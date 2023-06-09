@@ -17,6 +17,7 @@ export const load_image_base64_encoding = async (
       reader.onloadend = () => {
         const base64String = reader.result as string;
         const encodedData = base64String.split(",")[1];
+
         resolve({
           base64String: encodedData,
           fileType: blob.type,
