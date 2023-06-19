@@ -16,6 +16,7 @@ import { upload_image_class } from "../utils/upload_image";
 
 import * as Network from "expo-network";
 import { useNavigation } from "expo-router";
+import { createNotionEntry } from "../utils/notion";
 
 export default function ModalScreen() {
   const route = useRoute();
@@ -47,13 +48,11 @@ export default function ModalScreen() {
 
   const __predictionAPI = async () => {
     setIsPredicting(true);
-    console.log("predictionAPI");
 
     try {
       if (!image) return;
       //@ts-ignore
       setPredictionStep(1);
-      console.log("image");
 
       // get bytesize of image
       const bytesize = 4 * (image.base64.length / 3);
@@ -91,12 +90,19 @@ export default function ModalScreen() {
       });
 
       // upload image to firebase data pipeline
-      const img_url = await upload_image_class(
+      const data = await upload_image_class(
         image.base64,
         image.file_type,
         prediction
       );
-      console.log("img_url", img_url);
+      createNotionEntry(
+        data.url,
+        prediction,
+        image.file_type,
+        data.size,
+        data.key
+      );
+      console.log("img_url", data.url);
     } catch (error: any) {
       if (axios.isCancel(error)) {
         alert("Request canceled");

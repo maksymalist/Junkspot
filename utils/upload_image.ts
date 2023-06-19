@@ -35,11 +35,17 @@ export const base64_to_url = async (
   return out;
 };
 
+interface ImageData {
+  url: string;
+  key: string;
+  size: number;
+}
+
 export const upload_image_class = async (
   base64: string,
   file_type: string,
   prediction: Prediction
-): Promise<string> => {
+): Promise<ImageData> => {
   // upload image to class folder
   const storage_ref = storage.ref(`${prediction}/`);
   const id = new Date().getTime().toString();
@@ -55,5 +61,9 @@ export const upload_image_class = async (
   const snapshot = await storage_ref.child(id).put(blob, metadata);
   const url = await snapshot.ref.getDownloadURL();
 
-  return url;
+  return {
+    url: url,
+    key: id,
+    size: blob.size,
+  };
 };

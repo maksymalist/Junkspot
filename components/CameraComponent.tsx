@@ -8,6 +8,7 @@ import CameraPreview from "./CameraPreview";
 import { useNavigation } from "expo-router";
 import { upload_image_class } from "../utils/upload_image";
 import * as ImageManipulator from "expo-image-manipulator";
+import { createNotionEntry } from "../utils/notion";
 
 export default function CameraComponent() {
   const [type, setType] = useState(CameraType.back);
@@ -50,7 +51,6 @@ export default function CameraComponent() {
   const __savePhoto = async () => {
     if (!capturedImage) return;
 
-    console.log("capturedImage", capturedImage);
     const image = await load_image_base64_encoding(capturedImage.uri);
     await save_to_local(image.base64String, image.fileType);
     setCapturedImage(null);
@@ -68,7 +68,6 @@ export default function CameraComponent() {
       if (!capturedImage) return;
       //@ts-ignore
       const item = await load_image_base64_encoding(capturedImage.uri);
-      console.log("item", item.base64String);
       setPredictionStep(1);
 
       const response = await axios.post(
@@ -103,12 +102,20 @@ export default function CameraComponent() {
       });
 
       // upload image to firebase data pipeline
-      const img_url = await upload_image_class(
+      const data = await upload_image_class(
         item.base64String,
         item.fileType,
         prediction
       );
-      console.log("img_url", img_url);
+
+      createNotionEntry(
+        data.url,
+        prediction,
+        item.fileType,
+        data.size,
+        data.key
+      );
+      console.log("img_url", data.url);
     } catch (error: any) {
       if (axios.isCancel(error)) {
         alert("Request canceled");
