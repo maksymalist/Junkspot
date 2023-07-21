@@ -84,7 +84,7 @@ export default function CameraComponent() {
       );
 
       // Handle the response here
-      const prediction = response.data.result[0];
+      const prediction = response.data.result[0].result;
 
       setPredictionStep(2);
 
