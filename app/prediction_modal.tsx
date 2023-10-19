@@ -16,7 +16,7 @@ export default function ModalScreen() {
   const route = useRoute();
   const colorScheme = useColorScheme();
   const { prediction1, img_base64, file_type } = route.params as any;
-  const prediction = "plastic";
+  const prediction = "trash";
 
   // Cardboard state
   const [cardboardIsDirty, setCardboardIsDirty] = useState(false);
@@ -49,16 +49,37 @@ export default function ModalScreen() {
       />
       {
         prediction == "glass" ? (
-          <Text style={styles.title}>Recyclable</Text>
-        ) : // DONE
-        prediction == "metal" ? (
-          <Text style={styles.title}>Recyclable</Text> // DONE
+          <>
+            <Text style={styles.title}>Recyclable</Text>
+            <View style={{ marginBottom: 30 }} />
+            <Image
+              source={{
+                uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
+              }}
+              width={200}
+              height={200}
+              alt="recyclable"
+            />
+          </>
+        ) : prediction == "metal" ? (
+          <>
+            <Text style={styles.title}>Recyclable</Text>
+            <View style={{ marginBottom: 30 }} />
+            <Image
+              source={{
+                uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
+              }}
+              width={200}
+              height={200}
+              alt="recyclable"
+            />
+          </>
         ) : prediction == "paper" ? (
           <View style={styles.subContainer}>
             {selectedDirtyPaper ? (
               <>
                 {paperIsDirty ? (
-                  <View>
+                  <View style={styles.subContainer}>
                     <Text style={styles.title}>Compostable</Text>
                     <Button
                       onPress={() => {
@@ -66,15 +87,33 @@ export default function ModalScreen() {
                       }}
                       title="go back 👀"
                     />
+                    <View style={{ marginBottom: 5 }} />
+                    <Image
+                      source={{
+                        uri: "https://img.icons8.com/?size=256&id=m4aadlK9yuE1&format=png",
+                      }}
+                      width={200}
+                      height={200}
+                      alt="compostable"
+                    />
                   </View>
                 ) : (
-                  <View>
+                  <View style={styles.subContainer}>
                     <Text style={styles.title}>Recyclable</Text>
                     <Button
                       onPress={() => {
                         setSelectedDirtyPaper(false);
                       }}
                       title="go back 👀"
+                    />
+                    <View style={{ marginBottom: 5 }} />
+                    <Image
+                      source={{
+                        uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
+                      }}
+                      width={200}
+                      height={200}
+                      alt="recyclable"
                     />
                   </View>
                 )}
@@ -116,7 +155,7 @@ export default function ModalScreen() {
             {selectedDirtyCardboard ? (
               <>
                 {cardboardIsDirty ? (
-                  <View>
+                  <View style={styles.subContainer}>
                     <Text style={styles.title}>Compostable</Text>
                     <Button
                       onPress={() => {
@@ -124,15 +163,33 @@ export default function ModalScreen() {
                       }}
                       title="go back 👀"
                     />
+                    <View style={{ marginBottom: 5 }} />
+                    <Image
+                      source={{
+                        uri: "https://img.icons8.com/?size=256&id=m4aadlK9yuE1&format=png",
+                      }}
+                      width={200}
+                      height={200}
+                      alt="compostable"
+                    />
                   </View>
                 ) : (
-                  <View>
+                  <View style={styles.subContainer}>
                     <Text style={styles.title}>Recyclable</Text>
                     <Button
                       onPress={() => {
                         setSelectedDirtyCardboard(false);
                       }}
                       title="go back 👀"
+                    />
+                    <View style={{ marginBottom: 5 }} />
+                    <Image
+                      source={{
+                        uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
+                      }}
+                      width={200}
+                      height={200}
+                      alt="recyclable"
                     />
                   </View>
                 )}
@@ -178,7 +235,7 @@ export default function ModalScreen() {
                     {selectedRecyclablePlastic ? (
                       <>
                         {isRecyclablePlastic ? (
-                          <View>
+                          <View style={styles.subContainer}>
                             <Text style={styles.title}>Recyclable</Text>
                             <Button
                               onPress={() => {
@@ -187,9 +244,18 @@ export default function ModalScreen() {
                               }}
                               title="go back 👀"
                             />
+                            <View style={{ marginBottom: 5 }} />
+                            <Image
+                              source={{
+                                uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
+                              }}
+                              width={200}
+                              height={200}
+                              alt="recyclable"
+                            />
                           </View>
                         ) : (
-                          <View>
+                          <View style={styles.subContainer}>
                             <Text style={styles.title}>Trash</Text>
                             <Button
                               onPress={() => {
@@ -197,6 +263,15 @@ export default function ModalScreen() {
                                 setSelectedRecyclablePlastic(false);
                               }}
                               title="go back 👀"
+                            />
+                            <View style={{ marginBottom: 5 }} />
+                            <Image
+                              source={{
+                                uri: "https://img.icons8.com/?size=512&id=109470&format=png",
+                              }}
+                              width={255}
+                              height={255}
+                              alt="trash"
                             />
                           </View>
                         )}
@@ -259,7 +334,7 @@ export default function ModalScreen() {
                     {selectedStrechablePlastic ? (
                       <>
                         {isStrechablePlastic ? (
-                          <View>
+                          <View style={styles.subContainer}>
                             <Text style={styles.title}>Recyclable</Text>
                             <Button
                               onPress={() => {
@@ -268,9 +343,18 @@ export default function ModalScreen() {
                               }}
                               title="go back 👀"
                             />
+                            <View style={{ marginBottom: 5 }} />
+                            <Image
+                              source={{
+                                uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
+                              }}
+                              width={200}
+                              height={200}
+                              alt="recyclable"
+                            />
                           </View>
                         ) : (
-                          <View>
+                          <View style={styles.subContainer}>
                             <Text style={styles.title}>Trash</Text>
                             <Button
                               onPress={() => {
@@ -278,6 +362,15 @@ export default function ModalScreen() {
                                 setSelectedStrechablePlastic(false);
                               }}
                               title="go back 👀"
+                            />
+                            <View style={{ marginBottom: 5 }} />
+                            <Image
+                              source={{
+                                uri: "https://img.icons8.com/?size=512&id=109470&format=png",
+                              }}
+                              width={255}
+                              height={255}
+                              alt="trash"
                             />
                           </View>
                         )}
@@ -369,9 +462,31 @@ export default function ModalScreen() {
           </View>
         ) : // Check if bendable and other stuff
         prediction == "biological" ? (
-          <Text style={styles.title}>Compostable</Text> // DONE
+          <>
+            <Text style={styles.title}>Compostable</Text>
+            <View style={{ marginBottom: 30 }} />
+            <Image
+              source={{
+                uri: "https://img.icons8.com/?size=256&id=m4aadlK9yuE1&format=png",
+              }}
+              width={200}
+              height={200}
+              alt="compostable"
+            />
+          </>
         ) : prediction == "trash" ? (
-          <Text style={styles.title}>Trash</Text>
+          <>
+            <Text style={styles.title}>Trash</Text>
+            <View style={{ marginBottom: 5 }} />
+            <Image
+              source={{
+                uri: "https://img.icons8.com/?size=512&id=109470&format=png",
+              }}
+              width={255}
+              height={255}
+              alt="trash"
+            />
+          </>
         ) : (
           <Text style={styles.title}>No clue!</Text>
         ) // DONE
