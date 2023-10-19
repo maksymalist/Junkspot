@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonPrimary: {
-    backgroundColor: "#87C159",
+    backgroundColor: "#3ed54b",
     width: "100%",
     maxWidth: 350,
     height: 50,

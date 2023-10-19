@@ -8,7 +8,11 @@ import {
   useColorScheme,
   ActivityIndicator,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import {
+  FontAwesome5,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 
 import * as Network from "expo-network";
 
@@ -74,6 +78,7 @@ const CameraPreview = ({
                 alignItems: "center",
                 borderRadius: 50,
                 display: "flex",
+                flexDirection: "row",
                 justifyContent: "center",
               }}
             >
@@ -83,8 +88,9 @@ const CameraPreview = ({
                   fontSize: 15,
                 }}
               >
-                Re-take
+                re-take
               </Text>
+              <MaterialCommunityIcons name="restart" size={24} color="black" />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={savePhoto}
@@ -95,17 +101,21 @@ const CameraPreview = ({
                 alignItems: "center",
                 borderRadius: 50,
                 display: "flex",
+                flexDirection: "row",
                 justifyContent: "center",
+                paddingHorizontal: 10,
               }}
             >
               <Text
                 style={{
                   color: colorScheme === "dark" ? "#fff" : "#000",
                   fontSize: 15,
+                  marginRight: 5,
                 }}
               >
                 save photo
               </Text>
+              <MaterialIcons name="save-alt" size={24} color="black" />
             </TouchableOpacity>
           </View>
         </View>
@@ -124,7 +134,7 @@ const CameraPreview = ({
           {isPredicting ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (
-            "predict"
+            "identify"
           )}{" "}
         </Text>
         {!isPredicting ? (
@@ -157,6 +167,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     padding: 10,
+    borderRadius: 10,
   },
   sub_container: {
     width: "100%",
@@ -187,7 +198,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonPrimary: {
-    backgroundColor: "#87C159",
+    backgroundColor: "#3ed54b",
     width: "100%",
     maxWidth: 350,
     height: 50,

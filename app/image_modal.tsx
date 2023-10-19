@@ -9,7 +9,7 @@ import {
 import { Text, View } from "../components/Themed";
 import { useRoute } from "@react-navigation/native";
 import { OfflineImage } from "types/offline_image";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { upload_image_class } from "../utils/upload_image";
@@ -139,7 +139,7 @@ export default function ModalScreen() {
           {isPredicting ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (
-            "predict"
+            "identify"
           )}{" "}
         </Text>
         {!isPredicting ? (
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonPrimary: {
-    backgroundColor: "#87C159",
+    backgroundColor: "#3ed54b",
     width: "100%",
     maxWidth: 350,
     height: 50,
