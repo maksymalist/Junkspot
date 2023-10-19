@@ -15,17 +15,32 @@ import PredictionImage from "../components/PredictionImage";
 export default function ModalScreen() {
   const route = useRoute();
   const colorScheme = useColorScheme();
-  const { prediction, img_base64, file_type } = route.params as any;
-  //const prediction = "cardboard";
+  const { prediction1, img_base64, file_type } = route.params as any;
+  const prediction = "plastic";
 
+  // Cardboard state
   const [cardboardIsDirty, setCardboardIsDirty] = useState(false);
   const [selectedDirtyCardboard, setSelectedDirtyCardboard] = useState(false);
 
+  // Paper state
   const [paperIsDirty, setPaperIsDirty] = useState(false);
   const [selectedDirtyPaper, setSelectedDirtyPaper] = useState(false);
 
+  // Plastic state
+  const [isRigidPlastic, setIsRigidPlastic] = useState(false); // ither is rigid or flexible
+  const [selectedRigidPlastic, setSelectedRigidPlastic] = useState(false);
+
+  const [isRecyclablePlastic, setIsRecyclablePlastic] = useState(false); // ither is recyclable or not
+  const [selectedRecyclablePlastic, setSelectedRecyclablePlastic] =
+    useState(false);
+
+  const [isStrechablePlastic, setIsStrechablePlastic] = useState(false); // ither is stretchable or not
+  const [selectedStrechablePlastic, setSelectedStrechablePlastic] =
+    useState(false);
+
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>it's {prediction}!</Text>
       <PredictionImage
         base64={img_base64}
         file_type={file_type}
@@ -66,7 +81,6 @@ export default function ModalScreen() {
               </>
             ) : (
               <>
-                <Text style={styles.title}>it's {prediction}!</Text>
                 <Text style={{ fontSize: 20, marginTop: 40, marginBottom: 40 }}>
                   Is it dirty? 🐷
                 </Text>
@@ -125,7 +139,6 @@ export default function ModalScreen() {
               </>
             ) : (
               <>
-                <Text style={styles.title}>it's {prediction}!</Text>
                 <Text style={{ fontSize: 20, marginTop: 40, marginBottom: 40 }}>
                   Is it dirty? 🐷
                 </Text>
@@ -157,8 +170,205 @@ export default function ModalScreen() {
             )}
           </View> // Check if dirty
         ) : prediction == "plastic" ? (
-          <Text style={styles.title}>Recyclable</Text> // Check if bendable and other stuff
-        ) : prediction == "biological" ? (
+          <View style={styles.subContainer}>
+            {selectedRigidPlastic ? (
+              <>
+                {isRigidPlastic ? (
+                  <>
+                    {selectedRecyclablePlastic ? (
+                      <>
+                        {isRecyclablePlastic ? (
+                          <View>
+                            <Text style={styles.title}>Recyclable</Text>
+                            <Button
+                              onPress={() => {
+                                setSelectedRigidPlastic(false);
+                                setSelectedRecyclablePlastic(false);
+                              }}
+                              title="go back 👀"
+                            />
+                          </View>
+                        ) : (
+                          <View>
+                            <Text style={styles.title}>Trash</Text>
+                            <Button
+                              onPress={() => {
+                                setSelectedRigidPlastic(false);
+                                setSelectedRecyclablePlastic(false);
+                              }}
+                              title="go back 👀"
+                            />
+                          </View>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <View>
+                          <Text style={{ fontSize: 20, marginTop: 40 }}>
+                            What type of plastic is it?
+                          </Text>
+                          <Button
+                            onPress={() => {
+                              setSelectedRigidPlastic(false);
+                            }}
+                            title="go back 👀"
+                          />
+                        </View>
+                        <View style={{ marginBottom: 40 }} />
+                        <View style={styles.buttonContainer}>
+                          <TouchableOpacity
+                            style={styles.buttonPrimaryLG}
+                            onPress={() => {
+                              setIsRecyclablePlastic(true);
+                              setSelectedRecyclablePlastic(true);
+                            }}
+                          >
+                            <Text
+                              style={{
+                                color: "#fff",
+                                fontWeight: "bold",
+                                fontSize: 30,
+                              }}
+                            >
+                              ♳ ♴ ♵ ♶ ♷ ♹ ♻ ♼ ♽
+                            </Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={styles.buttonSecondary}
+                            onPress={() => {
+                              setIsRecyclablePlastic(false);
+                              setSelectedRecyclablePlastic(true);
+                            }}
+                          >
+                            <Text
+                              style={{
+                                color: "#fff",
+                                fontWeight: "bold",
+                                fontSize: 30,
+                              }}
+                            >
+                              ♸ ♺
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {selectedStrechablePlastic ? (
+                      <>
+                        {isStrechablePlastic ? (
+                          <View>
+                            <Text style={styles.title}>Recyclable</Text>
+                            <Button
+                              onPress={() => {
+                                setSelectedRigidPlastic(false);
+                                setSelectedStrechablePlastic(false);
+                              }}
+                              title="go back 👀"
+                            />
+                          </View>
+                        ) : (
+                          <View>
+                            <Text style={styles.title}>Trash</Text>
+                            <Button
+                              onPress={() => {
+                                setSelectedRigidPlastic(false);
+                                setSelectedStrechablePlastic(false);
+                              }}
+                              title="go back 👀"
+                            />
+                          </View>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <View>
+                          <Text style={{ fontSize: 20, marginTop: 40 }}>
+                            Is it strechable?
+                          </Text>
+                          <Button
+                            onPress={() => {
+                              setSelectedRigidPlastic(false);
+                            }}
+                            title="go back 👀"
+                          />
+                        </View>
+                        <View style={{ marginBottom: 40 }} />
+                        <View style={styles.buttonContainer}>
+                          <TouchableOpacity
+                            style={styles.buttonPrimary}
+                            onPress={() => {
+                              setIsStrechablePlastic(true);
+                              setSelectedStrechablePlastic(true);
+                            }}
+                          >
+                            <Text
+                              style={{
+                                color: "#fff",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Yes ✅
+                            </Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={styles.buttonSecondary}
+                            onPress={() => {
+                              setIsStrechablePlastic(false);
+                              setSelectedStrechablePlastic(true);
+                            }}
+                          >
+                            <Text
+                              style={{
+                                color: "#fff",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              No ❌
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <Text style={{ fontSize: 20, marginTop: 40, marginBottom: 40 }}>
+                  Is it rigid or flexible?
+                </Text>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity
+                    style={styles.buttonPrimary}
+                    onPress={() => {
+                      setIsRigidPlastic(true);
+                      setSelectedRigidPlastic(true);
+                    }}
+                  >
+                    <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                      Rigid 🧱
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.buttonSecondary}
+                    onPress={() => {
+                      setIsRigidPlastic(false);
+                      setSelectedRigidPlastic(true);
+                    }}
+                  >
+                    <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                      Flexible 💪
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
+          </View>
+        ) : // Check if bendable and other stuff
+        prediction == "biological" ? (
           <Text style={styles.title}>Compostable</Text> // DONE
         ) : prediction == "trash" ? (
           <Text style={styles.title}>Trash</Text>
@@ -203,8 +413,18 @@ const styles = StyleSheet.create({
   buttonPrimary: {
     backgroundColor: "#3ed54b",
     width: 100,
-    maxWidth: 350,
     height: 50,
+    borderRadius: 15,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonPrimaryLG: {
+    backgroundColor: "#3ed54b",
+    width: 200,
+    padding: 5,
+    height: "auto",
     borderRadius: 15,
     display: "flex",
     flexDirection: "row",
