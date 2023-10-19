@@ -55,8 +55,8 @@ export default function ModalScreen() {
               source={{
                 uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
               }}
-              width={200}
-              height={200}
+              width={100}
+              height={100}
               alt="recyclable"
             />
           </>
@@ -68,8 +68,8 @@ export default function ModalScreen() {
               source={{
                 uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
               }}
-              width={200}
-              height={200}
+              width={100}
+              height={100}
               alt="recyclable"
             />
           </>
@@ -91,8 +91,8 @@ export default function ModalScreen() {
                       source={{
                         uri: "https://img.icons8.com/?size=256&id=m4aadlK9yuE1&format=png",
                       }}
-                      width={200}
-                      height={200}
+                      width={100}
+                      height={100}
                       alt="compostable"
                     />
                   </View>
@@ -110,8 +110,8 @@ export default function ModalScreen() {
                       source={{
                         uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
                       }}
-                      width={200}
-                      height={200}
+                      width={100}
+                      height={100}
                       alt="recyclable"
                     />
                   </View>
@@ -167,8 +167,8 @@ export default function ModalScreen() {
                       source={{
                         uri: "https://img.icons8.com/?size=256&id=m4aadlK9yuE1&format=png",
                       }}
-                      width={200}
-                      height={200}
+                      width={100}
+                      height={100}
                       alt="compostable"
                     />
                   </View>
@@ -186,8 +186,8 @@ export default function ModalScreen() {
                       source={{
                         uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
                       }}
-                      width={200}
-                      height={200}
+                      width={100}
+                      height={100}
                       alt="recyclable"
                     />
                   </View>
@@ -248,8 +248,8 @@ export default function ModalScreen() {
                               source={{
                                 uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
                               }}
-                              width={200}
-                              height={200}
+                              width={100}
+                              height={100}
                               alt="recyclable"
                             />
                           </View>
@@ -268,8 +268,8 @@ export default function ModalScreen() {
                               source={{
                                 uri: "https://img.icons8.com/?size=512&id=109470&format=png",
                               }}
-                              width={255}
-                              height={255}
+                              width={150}
+                              height={150}
                               alt="trash"
                             />
                           </View>
@@ -347,8 +347,8 @@ export default function ModalScreen() {
                               source={{
                                 uri: "https://img.icons8.com/?size=256&id=ulWyep8ifsWu&format=png",
                               }}
-                              width={200}
-                              height={200}
+                              width={100}
+                              height={100}
                               alt="recyclable"
                             />
                           </View>
@@ -367,8 +367,8 @@ export default function ModalScreen() {
                               source={{
                                 uri: "https://img.icons8.com/?size=512&id=109470&format=png",
                               }}
-                              width={255}
-                              height={255}
+                              width={150}
+                              height={150}
                               alt="trash"
                             />
                           </View>
@@ -468,8 +468,8 @@ export default function ModalScreen() {
               source={{
                 uri: "https://img.icons8.com/?size=256&id=m4aadlK9yuE1&format=png",
               }}
-              width={200}
-              height={200}
+              width={100}
+              height={100}
               alt="compostable"
             />
           </>
@@ -481,8 +481,8 @@ export default function ModalScreen() {
               source={{
                 uri: "https://img.icons8.com/?size=512&id=109470&format=png",
               }}
-              width={255}
-              height={255}
+              width={150}
+              height={150}
               alt="trash"
             />
           </>
@@ -536,7 +536,7 @@ const styles = StyleSheet.create({
   },
   buttonPrimaryLG: {
     backgroundColor: "#3ed54b",
-    width: 200,
+    width: 100,
     padding: 5,
     height: "auto",
     borderRadius: 15,
