@@ -12,9 +12,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "y"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +27,8 @@
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "package": "com.the_maksymalist.junkspot"
     },
     "web": {
       "bundler": "metro",
@@ -43,6 +47,12 @@
         "projectId": "30ca7fe5-7fe0-4621-9f68-6182e841bafa"
       }
     },
-    "owner": "the_maksymalist"
+    "owner": "the_maksymalist",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/30ca7fe5-7fe0-4621-9f68-6182e841bafa"
+    }
   }
 }

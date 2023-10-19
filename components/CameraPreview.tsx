@@ -9,7 +9,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 import {
+  Feather,
   FontAwesome5,
+  Ionicons,
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
@@ -90,7 +92,7 @@ const CameraPreview = ({
               >
                 re-take
               </Text>
-              <MaterialCommunityIcons name="restart" size={24} color="black" />
+              <Ionicons name="refresh" size={24} color="black" />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={savePhoto}
@@ -115,7 +117,7 @@ const CameraPreview = ({
               >
                 save photo
               </Text>
-              <MaterialIcons name="save-alt" size={24} color="black" />
+              <Feather name="download" size={24} color="black" />
             </TouchableOpacity>
           </View>
         </View>

@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
-    width: "50%",
+    width: "80%",
   },
   buttonPrimary: {
     backgroundColor: "#3ed54b",
