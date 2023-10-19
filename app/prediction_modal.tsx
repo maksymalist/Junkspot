@@ -15,8 +15,7 @@ import PredictionImage from "../components/PredictionImage";
 export default function ModalScreen() {
   const route = useRoute();
   const colorScheme = useColorScheme();
-  const { prediction1, img_base64, file_type } = route.params as any;
-  const prediction = "trash";
+  const { prediction, img_base64, file_type } = route.params as any;
 
   // Cardboard state
   const [cardboardIsDirty, setCardboardIsDirty] = useState(false);
