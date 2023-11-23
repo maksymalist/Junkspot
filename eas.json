@@ -3,16 +3,15 @@
     "version": ">= 3.13.0"
   },
   "build": {
-    "development": {
+    "release": {},
+    "development-simulator": {
       "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {}
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      }
+    }
   },
-  "image": "latest",
   "submit": {
     "production": {}
   }

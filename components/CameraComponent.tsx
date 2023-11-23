@@ -79,7 +79,7 @@ export default function CameraComponent() {
           headers: {
             "Content-Type": "application/json",
           },
-          timeout: 10000, // Timeout value in milliseconds (e.g., 5 seconds)
+          timeout: 35000, // Timeout value in milliseconds (e.g., 5 seconds)
         }
       );
 
