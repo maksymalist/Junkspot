@@ -54,7 +54,4 @@ export const createNotionEntry = async (
     //@ts-ignore
     properties: entryData,
   });
-
-  console.log(response);
-  console.log("Success! Entry added.");
 };

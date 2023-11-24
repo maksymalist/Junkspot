@@ -21,7 +21,14 @@ import { createNotionEntry } from "../utils/notion";
 export default function ModalScreen() {
   const route = useRoute();
   const colorScheme = useColorScheme();
-  const { image } = route.params as { image: OfflineImage };
+  const { image, setPredicted, setPredictedLabel, update_local_image, sync } =
+    route.params as {
+      image: OfflineImage;
+      setPredicted: any;
+      setPredictedLabel: any;
+      update_local_image: any;
+      sync: any;
+    };
   const [isPredicting, setIsPredicting] = useState<boolean>(false);
   const [predictionStep, setPredictionStep] = useState<number>(0);
 
@@ -56,7 +63,6 @@ export default function ModalScreen() {
 
       // get bytesize of image
       const bytesize = 4 * (image.base64.length / 3);
-      console.log("bytesize", bytesize / 1000000, "MB");
 
       const response = await axios.post(
         "https://junk-judge-web.vercel.app/api/predict",
@@ -67,16 +73,15 @@ export default function ModalScreen() {
           headers: {
             "Content-Type": "application/json",
           },
-          timeout: 10000, // Timeout value in milliseconds (e.g., 5 seconds)
+          timeout: 35000, // Timeout value in milliseconds (e.g., 5 seconds)
         }
       );
 
       // Handle the response here
       const prediction = response.data.result[0];
+      const label = prediction.result;
 
       setPredictionStep(2);
-
-      console.log("prediction", prediction);
 
       if (!prediction) return;
       setPredictionStep(3);
@@ -84,7 +89,7 @@ export default function ModalScreen() {
       setPredictionStep(0);
       //@ts-ignore
       navigation.navigate("prediction_modal", {
-        prediction: prediction,
+        prediction: label,
         img_base64: image.base64,
         file_type: image.file_type,
       });
@@ -93,16 +98,20 @@ export default function ModalScreen() {
       const data = await upload_image_class(
         image.base64,
         image.file_type,
-        prediction
+        label
       );
-      createNotionEntry(
-        data.url,
-        prediction,
-        image.file_type,
-        data.size,
-        data.key
-      );
-      console.log("img_url", data.url);
+      createNotionEntry(data.url, label, image.file_type, data.size, data.key);
+      setPredicted(true);
+      setPredictedLabel(label);
+
+      const new_offline_image: OfflineImage = {
+        ...image,
+        predicted: true,
+        predicted_label: label,
+      };
+
+      update_local_image(new_offline_image);
+      sync();
     } catch (error: any) {
       if (axios.isCancel(error)) {
         alert("Request canceled");

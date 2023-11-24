@@ -5,6 +5,7 @@ import { Pressable, useColorScheme } from "react-native";
 import Colors from "../../constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { View } from "react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -16,20 +17,29 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="two"
         options={{
-          title: "Camera",
+          title: "Collection",
           tabBarIcon: ({ color }) => (
-            <AntDesign name="camerao" size={24} color={color} />
+            <Entypo name="images" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="index"
         options={{
-          title: "Images",
+          title: "Camera",
           tabBarIcon: ({ color }) => (
-            <Entypo name="images" size={24} color={color} />
+            <View
+              style={{
+                padding: 15,
+                marginTop: -30,
+                backgroundColor: "#3ed54b",
+                borderRadius: 100,
+              }}
+            >
+              <AntDesign name="camerao" size={28} color={"#fff"} />
+            </View>
           ),
         }}
       />

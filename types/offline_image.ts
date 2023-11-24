@@ -4,4 +4,6 @@ export type OfflineImage = {
   time: number;
   file_type: string;
   location: string;
+  predicted: boolean;
+  predicted_label: string | null;
 };

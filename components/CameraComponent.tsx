@@ -88,8 +88,6 @@ export default function CameraComponent() {
 
       setPredictionStep(2);
 
-      console.log("prediction", prediction);
-
       if (!prediction) return;
       setPredictionStep(3);
       setIsPredicting(false);
@@ -115,7 +113,6 @@ export default function CameraComponent() {
         data.size,
         data.key
       );
-      console.log("img_url", data.url);
     } catch (error: any) {
       if (axios.isCancel(error)) {
         alert("Request canceled");
